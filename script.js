@@ -7,8 +7,11 @@ function getUrlParameter(name) {
 var shotit = function () {
   const value = getUrlParameter("text");
   const width = getUrlParameter("width") || 390;
+  const height = getUrlParameter("height") || 30;
   let pTag = document.getElementsByTagName("p")[0];
+  pTag.style.color = 'white'
   pTag.textContent = value;
+  pTag.style.fontSize = "24px";
   html2canvas(document.body, {
     onrendered: function (canvas) {
       document.body.appendChild(canvas);
@@ -21,6 +24,6 @@ var shotit = function () {
       document.write(resultHtml);
     },
     width: width,
-    height: 70,
+    height: height,
   });
 };
