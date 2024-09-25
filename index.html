@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html style="height: 100%;">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, minimum-scale=0.1">
     <title>Text to PNG Converter</title>
     <style>
         body {
@@ -12,15 +12,17 @@
             align-items: center;
             margin-top: 50px;
         }
+
         #canvas {
             border: 1px solid black;
         }
     </style>
 </head>
-<body>
-    <h1>Convert Text to PNG Image</h1>
-    
-    <canvas id="canvas" height="50"></canvas>
+
+<body style="margin: 0px; height: 100%; background-color: rgb(14, 14, 14);">
+
+
+    <canvas id="canvas" height="50" width="450"></canvas>
     <br />
     <a id="downloadLink" style="display:none;">Download Image</a>
     <br />
@@ -33,6 +35,13 @@
             return urlParams.get(name);
         }
 
+        // Get parameters from URL
+        const text = getUrlParameter('text') || 'Default Text';
+        const size = parseInt(getUrlParameter('size'), 10) || 30;
+        const isBold = getUrlParameter('isbold') || 'false';
+        const canva = document.getElementById('canvas');
+        const width = getUrlParameter('width') || text.length * 15
+        canva.width = width
         // Function to generate the image
         function generateImage(text, fontSize, isBold) {
             const canvas = document.getElementById('canvas');
@@ -40,7 +49,8 @@
 
             // Clear the canvas
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-
+            ctx.fillStyle = 'white'; // Set background color
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
             // Set font and text properties based on parameters
             const fontWeight = isBold === 'true' ? 'bold' : 'normal';
             ctx.font = `${fontWeight} ${fontSize}px Arial`;
@@ -52,7 +62,7 @@
             ctx.fillText(text, canvas.width / 2, canvas.height / 2);
 
             // Convert canvas to image
-            const image = canvas.toDataURL('image/png');
+            const image = canvas.toDataURL('image/jfif');
 
             // Set up download link
             const downloadLink = document.getElementById('downloadLink');
@@ -64,20 +74,18 @@
             // Set up open in new tab button
             const newTabButton = document.getElementById('newTabButton');
             newTabButton.style.display = 'inline';
-            document.body.onload = function() {
+            document.body.onload = function () {
                 // Open image in a new tab
                 // const newTab = window.open();
                 document.body.innerHTML = `<img src="${image}" />`;
             };
         }
 
-        // Get parameters from URL
-        const text = getUrlParameter('text') || 'Default Text';
-        const size = parseInt(getUrlParameter('size'), 10) || 30;
-        const isBold = getUrlParameter('isbold') || 'false';
+
 
         // Generate image using URL parameters
         generateImage(text, size, isBold);
     </script>
 </body>
+
 </html>
