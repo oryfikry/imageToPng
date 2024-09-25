@@ -23,10 +23,11 @@
 
 
     <canvas id="canvas" height="50" width="450"></canvas>
+    <img src="" id="images">
+    
+    <!-- <a id="downloadLink" style="display:none;">Download Image</a>
     <br />
-    <a id="downloadLink" style="display:none;">Download Image</a>
-    <br />
-    <button id="newTabButton" style="display:none;">Open Image in New Tab</button>
+    <button id="newTabButton" style="display:none;">Open Image in New Tab</button> -->
 
     <script>
         // Function to get URL parameters
@@ -66,19 +67,21 @@
 
             // Set up download link
             const downloadLink = document.getElementById('downloadLink');
-            downloadLink.href = image;
-            downloadLink.download = 'text-image.png';
-            downloadLink.style.display = 'inline';
-            downloadLink.innerText = 'Download Image';
+            // downloadLink.href = image;
+            // downloadLink.download = 'text-image.png';
+            // downloadLink.style.display = 'inline';
+            // downloadLink.innerText = 'Download Image';
 
             // Set up open in new tab button
             const newTabButton = document.getElementById('newTabButton');
-            newTabButton.style.display = 'inline';
-            document.body.onload = function () {
-                // Open image in a new tab
-                // const newTab = window.open();
-                document.body.innerHTML = `<img src="${image}" />`;
-            };
+            // newTabButton.style.display = 'inline';
+            const tagImages = document.getElementById('images')
+            tagImages.src = image
+            // document.body.onload = function () {
+            //     // Open image in a new tab
+            //     // const newTab = window.open();
+            //     document.body.innerHTML = `<img src="${image}" />`;
+            // };
         }
 
 
