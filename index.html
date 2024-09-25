@@ -12,11 +12,19 @@
             align-items: center;
             margin-top: 50px;
         }
-       
+        #canvas {
+            border: 1px solid black;
+        }
     </style>
 </head>
 <body>
-    <canvas id="canvas" width="500" height="50"></canvas>
+    <h1>Convert Text to PNG Image</h1>
+    
+    <canvas id="canvas" height="50"></canvas>
+    <br />
+    <a id="downloadLink" style="display:none;">Download Image</a>
+    <br />
+    <button id="newTabButton" style="display:none;">Open Image in New Tab</button>
 
     <script>
         // Function to get URL parameters
@@ -52,6 +60,15 @@
             downloadLink.download = 'text-image.png';
             downloadLink.style.display = 'inline';
             downloadLink.innerText = 'Download Image';
+
+            // Set up open in new tab button
+            const newTabButton = document.getElementById('newTabButton');
+            newTabButton.style.display = 'inline';
+            document.body.onload = function() {
+                // Open image in a new tab
+                // const newTab = window.open();
+                document.body.innerHTML = `<img src="${image}" />`;
+            };
         }
 
         // Get parameters from URL
