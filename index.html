@@ -1,46 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=0.1">
-    <title>Document</title>
-    <script src="html2canvas.js"></script>
-    <script src="script.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text to PNG Converter</title>
     <style>
-        p {
-            font-family: Helvetica;
-            font-size: 50px;
-            letter-spacing: 1px;
-            margin: 0;
-            display: block;
-            width: 20px;
-        }
-
-        a {
-            color: #fff;
-            text-decoration: none;
-            font-family: Helvetica;
-            font-weight: bold;
-            display: block;
-            padding: 10px;
-            background-color: #13a6f5;
-            float: left;
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             margin-top: 50px;
         }
-
-        canvas {
-            position: absolute;
-            top: 0;
-            left: 400px;
-            visibility: hidden;
-        }
+       
     </style>
 </head>
+<body>
+    <canvas id="canvas" width="500" height="50"></canvas>
 
-<body style="margin: 0px; height: 100%; background-color: rgb(14, 14, 14);" onload="shotit()">
-<p></p>
+    <script>
+        // Function to get URL parameters
+        function getUrlParameter(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+
+        // Function to generate the image
+        function generateImage(text, fontSize, isBold) {
+            const canvas = document.getElementById('canvas');
+            const ctx = canvas.getContext('2d');
+
+            // Clear the canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Set font and text properties based on parameters
+            const fontWeight = isBold === 'true' ? 'bold' : 'normal';
+            ctx.font = `${fontWeight} ${fontSize}px Arial`;
+            ctx.fillStyle = 'black';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+
+            // Draw the text on the canvas
+            ctx.fillText(text, canvas.width / 2, canvas.height / 2);
+
+            // Convert canvas to image
+            const image = canvas.toDataURL('image/png');
+
+            // Set up download link
+            const downloadLink = document.getElementById('downloadLink');
+            downloadLink.href = image;
+            downloadLink.download = 'text-image.png';
+            downloadLink.style.display = 'inline';
+            downloadLink.innerText = 'Download Image';
+        }
+
+        // Get parameters from URL
+        const text = getUrlParameter('text') || 'Default Text';
+        const size = parseInt(getUrlParameter('size'), 10) || 30;
+        const isBold = getUrlParameter('isbold') || 'false';
+
+        // Generate image using URL parameters
+        generateImage(text, size, isBold);
+    </script>
 </body>
-
-
 </html>

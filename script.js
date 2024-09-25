@@ -12,6 +12,8 @@ var shotit = function () {
   pTag.style.color = 'white'
   pTag.textContent = value;
   pTag.style.fontSize = "24px";
+  bodyTag = document.getElementsByTagName("body")[0];
+  bodyTag.style = "margin: 0px; height: 100%; background-color: rgb(14, 14, 14);"
   html2canvas(document.body, {
     onrendered: function (canvas) {
       document.body.appendChild(canvas);
